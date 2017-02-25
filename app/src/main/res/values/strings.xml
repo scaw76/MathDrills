@@ -1,0 +1,11 @@
+<resources>
+
+    <string name="app_name">MathDrills</string>
+    <string name="add"> + </string>
+    <string name="subtract"> - </string>
+    <string name="times"> × </string>
+    <string name="divide"> ÷ </string>
+    <string name="equals"> = </string>
+    <string name="best_time_label">Best Time</string>
+
+</resources>
