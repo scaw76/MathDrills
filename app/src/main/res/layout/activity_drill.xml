@@ -19,6 +19,26 @@
         android:text="time: 2m:5s"
         android:gravity="top|right"/>
     <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageButton
+
+            android:layout_gravity="left"
+            android:id="@+id/previous_button"
+            android:src="@mipmap/arrow_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageButton
+            android:layout_gravity="right"
+            android:id="@+id/next_button"
+            android:src="@mipmap/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout
         android:layout_marginTop="24dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
@@ -29,11 +49,12 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <TextView
-                android:id="@+id/mode"
+                android:id="@+id/math_type"
                 style="@style/bodyText"
                 android:layout_gravity="bottom"
-                android:text="@string/times"
+                android:text="@string/subtract"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <LinearLayout
@@ -56,6 +77,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
             </LinearLayout>
+
         </LinearLayout>
         <View
             android:paddingTop="10dp"
@@ -65,14 +87,12 @@
             android:background="#000"/>
     </LinearLayout>
         <EditText
-
             style="@style/answerTheme"
-            android:inputType="number|textNoSuggestions"
+            android:inputType="numberDecimal|textNoSuggestions"
             android:background="@null"
             android:gravity="center"
             android:id="@+id/answer_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
-
 
 </LinearLayout>

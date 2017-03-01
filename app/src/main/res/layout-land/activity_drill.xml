@@ -12,16 +12,25 @@
         android:gravity="top|right"/>
 
     <LinearLayout
+        android:layout_gravity="center_horizontal"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_gravity="left"
+            android:id="@+id/previous_button"
+            android:src="@mipmap/arrow_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
         <LinearLayout
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical|right"
-            android:layout_weight="1"
             >
             <TextView
                 android:id="@+id/number1"
@@ -30,9 +39,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
-                android:id="@+id/mode"
+                android:id="@+id/math_type"
                 style="@style/bodyText"
-                android:text="@string/times"
+                android:text="@string/subtract"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
@@ -49,18 +58,20 @@
 
         </LinearLayout>
         <EditText
+            android:layout_weight="1"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="100dp"
             style="@style/answerTheme"
-            android:layout_weight="1"
             android:inputType="number|textNoSuggestions"
             android:imeOptions="flagNoExtractUi"
             android:id="@+id/answer_question"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+        <ImageButton
+            android:id="@+id/next_button"
+            android:src="@mipmap/arrow_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
     </LinearLayout>
-
-
-
 
 </LinearLayout>
