@@ -3,75 +3,103 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
-
-    <TextView
-        style="@style/timeTheme"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="time: 2m:5s"
-        android:gravity="top|right"/>
-
     <LinearLayout
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:id="@+id/test_ended"
+        android:visibility="gone"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            style="@style/bodyText"
+            android:textAlignment="center"
+            android:text="@string/finished"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/total_time"
+            style="@style/bodyText"
+            android:textAlignment="center"
+            android:text="@string/total_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/test_layout"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:layout_gravity="left"
-            android:id="@+id/previous_button"
-            android:src="@mipmap/arrow_left"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
-
-        <LinearLayout
-            android:layout_weight="1"
-            android:orientation="horizontal"
+        <TextView
+            android:id="@+id/timer"
+            style="@style/timeTheme"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical|right"
-            >
-            <TextView
-                android:id="@+id/number1"
-                style="@style/bodyText"
-                android:text="8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/math_type"
-                style="@style/bodyText"
-                android:text="@string/subtract"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/number2"
-                style="@style/bodyText"
-                android:text="4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-            <TextView
-                style="@style/bodyText"
-                android:text="@string/equals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+            android:text="time: 2m:5s"
+            android:gravity="top|right"/>
 
-        </LinearLayout>
-        <EditText
-            android:layout_weight="1"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="100dp"
-            style="@style/answerTheme"
-            android:inputType="number|textNoSuggestions"
-            android:imeOptions="flagNoExtractUi"
-            android:id="@+id/answer_question"
+        <LinearLayout
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-        <ImageButton
-            android:id="@+id/next_button"
-            android:src="@mipmap/arrow_right"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+            android:layout_height="wrap_content">
 
+            <ImageButton
+                android:layout_gravity="left"
+                android:id="@+id/previous_button"
+                android:src="@mipmap/arrow_left"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+
+            <LinearLayout
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|right"
+                >
+                <TextView
+                    android:id="@+id/number1"
+                    style="@style/bodyText"
+                    android:text="8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/math_type"
+                    style="@style/bodyText"
+                    android:text="@string/subtract"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/number2"
+                    style="@style/bodyText"
+                    android:text="4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    style="@style/bodyText"
+                    android:text="@string/equals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+            <EditText
+                android:layout_weight="1"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="100dp"
+                style="@style/answerTheme"
+                android:inputType="number|textNoSuggestions"
+                android:imeOptions="flagNoExtractUi"
+                android:id="@+id/answer_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageButton
+                android:id="@+id/next_button"
+                android:src="@mipmap/arrow_right"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

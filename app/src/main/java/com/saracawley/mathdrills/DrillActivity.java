@@ -4,39 +4,43 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DrillActivity extends AppCompatActivity {
-    // Tag
+    // Tags
     private static final String TAG = "DrillActivity";
 
-    boolean mTestFinished = false;
-    private int mAnswerInput = 999999;
+    private Timer mClockTimer;
 
-    // question setup info
-    private int mGoTo = 3;
-    private String mMathTypeForQuestions = "×";
-    private int mIndex = 0;
+    private static final long DELAY = 500;
+    private static final long SECONDS = 1000;
+
+    boolean mTestFinished = false;
+    // Questions
+    QuestionBank mQuestionBank = QuestionBank.getInstance();
 
     //Widgets
     private ImageButton mNextButton;
     private ImageButton mPreviousButton;
-    private TextView mFirstNumber;
-    private TextView mSecondNumber;
-    private TextView mMathType;
-    private EditText mAnswerField;
 
-    // Questions
-    private List<Question> mQuestions = new ArrayList<Question>();
+    private TextView mTimerView;
+    private TextView mFirstNumberView;
+    private TextView mSecondNumberView;
+    private TextView mMathTypeView;
+    private EditText mAnswerFieldView;
 
+    private TextView mTotalTimeView;
+    private LinearLayout mTestOverView;
+    private LinearLayout mTestView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +50,34 @@ public class DrillActivity extends AppCompatActivity {
         // connect widgets
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
-        mFirstNumber = (TextView) findViewById(R.id.number1);
-        mSecondNumber = (TextView) findViewById(R.id.number2);
-        mMathType = (TextView) findViewById(R.id.math_type);
-        mAnswerField = (EditText) findViewById(R.id.answer_question);
+        mFirstNumberView = (TextView) findViewById(R.id.number1);
+        mSecondNumberView = (TextView) findViewById(R.id.number2);
+        mMathTypeView = (TextView) findViewById(R.id.math_type);
+        mAnswerFieldView = (EditText) findViewById(R.id.answer_question);
+        mTimerView = (TextView) findViewById(R.id.timer);
+        mTotalTimeView = (TextView) findViewById(R.id.total_time);
+        mTestOverView = (LinearLayout) findViewById(R.id.test_ended);
+        mTestView = (LinearLayout) findViewById(R.id.test_layout);
+
+        //Timer
+        mClockTimer = new Timer();
+        mClockTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!mTestFinished){
+                            mQuestionBank.setEndTime(System.currentTimeMillis());
+                            long difference = mQuestionBank.getEndTime()-mQuestionBank.getStartTime();
+                            long diffSeconds = difference / DateUtils.SECOND_IN_MILLIS;
+                            mQuestionBank.setTotalTime(DateUtils.formatElapsedTime(diffSeconds));
+                            mTimerView.setText(mQuestionBank.getTotalTime());
+                        }
+                    }
+                });
+            }
+        }, 0,SECONDS);
 
         // Button Clicked
         mNextButton.setOnClickListener(new View.OnClickListener() {
@@ -62,104 +90,113 @@ public class DrillActivity extends AppCompatActivity {
         mPreviousButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+            if(mQuestionBank.getSize() != 0){
                 // go to previous question
-                if(mIndex == 0){
-                    mIndex = mQuestions.size()-1;
+                if(mQuestionBank.getIndex() == 0){
+                    mQuestionBank.setIndex(mQuestionBank.getSize() - 1);
                 }else {
-                    mIndex = (mIndex - 1);
+                    mQuestionBank.setIndex(mQuestionBank.getIndex() - 1);
                 }
                 updateView();
             }
+            }
         });
         // answer changed
-        mAnswerField.addTextChangedListener(new TextWatcher() {
+        mAnswerFieldView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                //Log.d(TAG, "before");
             }
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+                //Log.d(TAG,"on " + charSequence);
             }
-
+            // delay to see answer
+            private Timer timer = new Timer();
             @Override
             public void afterTextChanged(Editable editable) {
-                String textAnswer = mAnswerField.getText().toString();
-                Log.d(TAG, textAnswer);
-                if(textAnswer == ""){
-                    return;
-                }
-                int answer;
-                try {
-                    answer = Integer.parseInt(textAnswer);
-                    mAnswerInput = answer;
-                } catch (NumberFormatException e){
-                    Log.d(TAG, "purposely ignoring "+e.getMessage());
-                    return;
-                }
-/*
-                if(mAnswerField.getText().toString().trim().length() == 0 || mTestFinished){
-                    return;
-                }
-*/
-
-
-                if(mQuestions.get(mIndex).checkAnswer(answer)){
-                    if(mIndex == mQuestions.size()){
-                        mIndex = 0;
-                    }
-
-                    Log.d(TAG, mQuestions.size() + " questions ");
-                    mQuestions.remove(mIndex);
-                    if(mQuestions.size() == 0){
-                        mTestFinished = true;
-                    }
-                    updateView();
-
+                // still have questions, input, and test is not over
+                if(mQuestionBank.getSize() != 0 && !editable.toString().matches("") && !mTestFinished){
+                    //Log.d(TAG, "after" + editable.toString());
+                    // delay for user to see answer before loading next question
+                    timer.cancel();
+                    timer = new Timer();
+                    timer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            DrillActivity.this.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    //Log.d(TAG, "here");
+                                    checkAnswer();
+                                }
+                            });
+                        }
+                    }, DELAY);
                 }
             }
         });
-
-        // setup questions
-        setUpQuestions();
-        Collections.shuffle(mQuestions);
-        printQuestions();
-
         updateView();
     }
-    private void setUpQuestions(){
-        for(int i = 0; i<mGoTo+1; i++){
-            for(int j = 0; j<mGoTo+1; j++){
-                mQuestions.add(new Question(i,j,mMathTypeForQuestions));
-            }
-        }
-        printQuestions();
-    }
+
     private void goToNextQuestion(){
         // go to next question
-        if(mQuestions.size() != 0){
-            mIndex = (mIndex + 1) % mQuestions.size();
+        if(mQuestionBank.getSize() != 0){
+            int index = mQuestionBank.getIndex();
+            int newIndex = (index + 1) % mQuestionBank.getSize();
+            mQuestionBank.setIndex(newIndex);
         }
         updateView();
     }
-    private void printQuestions(){
-        for(int k=0; k<mQuestions.size(); k++){
-            Question q = mQuestions.get(k);
-            q.Display();
-        }
-        Log.d(TAG, mQuestions.size() + " questions ");
-    }
    private void updateView(){
-       if(mQuestions.size() == 0){
-           mFirstNumber.setText("Finished!");
-           mSecondNumber.setText("");
-           mMathType.setText("");
+       Log.d(TAG, "size in update " +mQuestionBank.getSize());
+       Log.d(TAG, "index in update " +mQuestionBank.getIndex());
+       if(mQuestionBank.getSize() == 0){
+
+           mTestView.setVisibility(View.GONE);
+           mAnswerFieldView.setEnabled(false);
+           mTestOverView.setVisibility(View.VISIBLE);
+           mTotalTimeView.setText(mQuestionBank.getTotalTime());
+
        }else{
-           mFirstNumber.setText(String.valueOf(mQuestions.get(mIndex).getFirstNumber()));
-           mSecondNumber.setText(String.valueOf(mQuestions.get(mIndex).getSecondNumber()));
-           mMathType.setText(mQuestions.get(mIndex).getMathType());
+           Question question = mQuestionBank.getQuestion(mQuestionBank.getIndex());
+           question.Display();
+           mFirstNumberView.setText(String.valueOf(question.getFirstNumber()));
+           mSecondNumberView.setText(String.valueOf(question.getSecondNumber()));
+           mMathTypeView.setText(question.getMathType());
        }
-       mAnswerField.setText("");
+       mAnswerFieldView.setText("");
    }
+
+    private final void checkAnswer(){
+        Question question = mQuestionBank.getQuestion(mQuestionBank.getIndex());
+        //question.Display();
+        String textAnswer = mAnswerFieldView.getText().toString();
+        Log.d(TAG, textAnswer);
+        int answer;
+        try {
+            answer = Integer.parseInt(textAnswer);
+        } catch (NumberFormatException e){
+            //Log.d(TAG, "purposely ignoring "+e.getMessage());
+            return;
+        }
+        if(question.checkAnswer(answer)){
+            //Toast toast = Toast.makeText(DrillActivity.this, R.string.correct, Toast.LENGTH_SHORT);
+            //toast.show();
+            int index = mQuestionBank.getIndex();
+            if( index == mQuestionBank.getSize()-1){
+               index =  0;
+            }
+            mQuestionBank.removeQuestion(mQuestionBank.getIndex());
+            mQuestionBank.setIndex(index);
+            if(mQuestionBank.getSize() == 0){
+                mTestFinished = true;
+                mClockTimer.cancel();
+            }
+            updateView();
+            mQuestionBank.printQuestions();
+        }
+    }
+
+
 }

@@ -7,5 +7,8 @@
     <string name="divide"> ÷ </string>
     <string name="equals"> = </string>
     <string name="best_time_label">Best Time</string>
+    <string name="correct">Correct!</string>
+    <string name="finished">Finished!</string>
+    <string name="total_time">Total Time</string>
 
 </resources>
