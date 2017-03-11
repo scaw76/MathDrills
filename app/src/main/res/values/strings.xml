@@ -1,4 +1,14 @@
 <resources>
+    <string name="addition">Addition</string>
+    <string name="subtraction">Subtraction</string>
+    <string name="multiplication">Multiplication</string>
+    <string name="division">Division</string>
+
+    <string name="beginner">Beginner</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
+
+    <string name="time_holder">00:00</string>
 
     <string name="app_name">MathDrills</string>
     <string name="add"> + </string>

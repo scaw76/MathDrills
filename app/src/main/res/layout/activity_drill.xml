@@ -32,94 +32,105 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/timer"
+        style="@style/timeTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="top|right"
+        android:text="time: 2m:5s" />
+
     <LinearLayout
         android:id="@+id/test_layout"
-        android:orientation="vertical"
+        android:gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <TextView
-            android:id="@+id/timer"
-            style="@style/timeTheme"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="time: 2m:5s"
-            android:gravity="top|right"/>
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageButton
+            android:orientation="horizontal">
 
-                android:layout_gravity="left"
+            <ImageButton
                 android:id="@+id/previous_button"
-                android:src="@mipmap/arrow_left"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="match_parent"
+                android:src="@mipmap/arrow_left" />
 
-            <ImageButton
-                android:layout_gravity="right"
-                android:id="@+id/next_button"
-                android:src="@mipmap/arrow_right"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_marginTop="24dp"
-            android:layout_gravity="center_horizontal|center_vertical"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
             <LinearLayout
-                android:layout_gravity="center"
-                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginTop="24dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/math_type"
-                    style="@style/bodyText"
-                    android:layout_gravity="bottom"
-                    android:text="@string/subtract"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
                 <LinearLayout
-                    android:gravity="center|bottom"
-                    android:orientation="vertical"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
                     <TextView
-                        android:id="@+id/number1"
+                        android:id="@+id/math_type"
                         style="@style/bodyText"
-                        android:layout_gravity="right"
-                        android:text="8"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:id="@+id/number2"
-                        style="@style/bodyText"
-                        android:layout_gravity="right"
-                        android:text="4"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="@string/subtract" />
+
+                    <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"/>
+                        android:layout_height="wrap_content"
+                        android:gravity="center|bottom"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/number1"
+                            style="@style/bodyText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:text="8" />
+
+                        <TextView
+                            android:id="@+id/number2"
+                            style="@style/bodyText"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="right"
+                            android:text="4" />
+                    </LinearLayout>
                 </LinearLayout>
 
+
             </LinearLayout>
-            <View
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="#000"/>
+            <ImageButton
+                android:id="@+id/next_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right|center_vertical"
+                android:src="@mipmap/arrow_right" />
+
         </LinearLayout>
+        <View
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/equal_line_margin"
+            android:layout_marginRight="@dimen/equal_line_margin"
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="#000"/>
         <EditText
+            android:id="@+id/answer_question"
             style="@style/answerTheme"
-            android:inputType="numberDecimal|textNoSuggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:background="@null"
             android:gravity="center"
-            android:id="@+id/answer_question"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:inputType="numberDecimal|textNoSuggestions" />
+
     </LinearLayout>
 
 </LinearLayout>

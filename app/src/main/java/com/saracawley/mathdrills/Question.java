@@ -13,6 +13,7 @@ public class Question {
     // member variables
     private int mFirstNumber;
     private int mSecondNumber;
+    private int mAnswer;
     private String mMathType;
 
     // create a question

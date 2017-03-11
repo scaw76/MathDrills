@@ -1,5 +1,7 @@
 package com.saracawley.mathdrills;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -17,8 +19,10 @@ import java.util.TimerTask;
 
 public class DrillActivity extends AppCompatActivity {
     // Tags
+    private static final String INDEX_FOR_TIME = ".com.saracawley.android.mathdrills.index_for_time";
     private static final String TAG = "DrillActivity";
 
+    private int mTimeIndex;
     private Timer mClockTimer;
 
     private static final long DELAY = 500;
@@ -41,12 +45,22 @@ public class DrillActivity extends AppCompatActivity {
     private TextView mTotalTimeView;
     private LinearLayout mTestOverView;
     private LinearLayout mTestView;
-
+/*
+    public static Intent newIntent(Context packageContext, int index) {
+        Intent i =  new Intent(packageContext, DrillActivity.class);
+        i.putExtra(INDEX_FOR_TIME, i);
+        return i;
+    }
+  */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drill);
-
+/*
+        // get index for time
+        mTimeIndex = getIntent().getIntExtra(INDEX_FOR_TIME,0);
+        Log.d(TAG, "time index "+ mTimeIndex);
+*/
         // connect widgets
         mNextButton = (ImageButton) findViewById(R.id.next_button);
         mPreviousButton = (ImageButton) findViewById(R.id.previous_button);
@@ -64,18 +78,18 @@ public class DrillActivity extends AppCompatActivity {
         mClockTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if(!mTestFinished){
-                            mQuestionBank.setEndTime(System.currentTimeMillis());
-                            long difference = mQuestionBank.getEndTime()-mQuestionBank.getStartTime();
-                            long diffSeconds = difference / DateUtils.SECOND_IN_MILLIS;
-                            mQuestionBank.setTotalTime(DateUtils.formatElapsedTime(diffSeconds));
-                            mTimerView.setText(mQuestionBank.getTotalTime());
-                        }
-                    }
-                });
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                if(!mTestFinished){
+                    mQuestionBank.setEndTime(System.currentTimeMillis());
+                    long difference = mQuestionBank.getEndTime()-mQuestionBank.getStartTime();
+                    long diffSeconds = difference / DateUtils.SECOND_IN_MILLIS;
+                    mQuestionBank.setTotalTime(DateUtils.formatElapsedTime(diffSeconds));
+                    mTimerView.setText(mQuestionBank.getTotalTime());
+                }
+                }
+            });
             }
         }, 0,SECONDS);
 
@@ -83,8 +97,8 @@ public class DrillActivity extends AppCompatActivity {
         mNextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // go to next question
-                goToNextQuestion();
+            // go to next question
+            goToNextQuestion();
             }
         });
         mPreviousButton.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +164,7 @@ public class DrillActivity extends AppCompatActivity {
     }
    private void updateView(){
        Log.d(TAG, "size in update " +mQuestionBank.getSize());
-       Log.d(TAG, "index in update " +mQuestionBank.getIndex());
+       //Log.d(TAG, "index in update " +mQuestionBank.getIndex());
        if(mQuestionBank.getSize() == 0){
 
            mTestView.setVisibility(View.GONE);
@@ -160,7 +174,7 @@ public class DrillActivity extends AppCompatActivity {
 
        }else{
            Question question = mQuestionBank.getQuestion(mQuestionBank.getIndex());
-           question.Display();
+           //question.Display();
            mFirstNumberView.setText(String.valueOf(question.getFirstNumber()));
            mSecondNumberView.setText(String.valueOf(question.getSecondNumber()));
            mMathTypeView.setText(question.getMathType());
@@ -172,7 +186,7 @@ public class DrillActivity extends AppCompatActivity {
         Question question = mQuestionBank.getQuestion(mQuestionBank.getIndex());
         //question.Display();
         String textAnswer = mAnswerFieldView.getText().toString();
-        Log.d(TAG, textAnswer);
+        //Log.d(TAG, textAnswer);
         int answer;
         try {
             answer = Integer.parseInt(textAnswer);
@@ -194,9 +208,8 @@ public class DrillActivity extends AppCompatActivity {
                 mClockTimer.cancel();
             }
             updateView();
-            mQuestionBank.printQuestions();
+            //mQuestionBank.printQuestions();
         }
     }
-
 
 }

@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class QuestionBank {
 
-    private static final String TAG= "QuestionBank";
+    private static final String TAG = "QuestionBank";
     private static QuestionBank ourInstance = new QuestionBank();
     public static QuestionBank getInstance() {
         return ourInstance;
@@ -28,12 +28,6 @@ public class QuestionBank {
     private QuestionBank() {
         mQuestions = new ArrayList<Question>();
         mIndex = 0;
-        mGoTo = 3;
-        mMathTypeForQuestions = "×";
-        setUpQuestions();
-        Collections.shuffle(mQuestions);
-        printQuestions();
-        mStartTime = System.currentTimeMillis();
     }
 
     public String getTotalTime() {
@@ -71,6 +65,7 @@ public class QuestionBank {
     public Question getQuestion(int index){
         return mQuestions.get(index);
     }
+
     public void removeQuestion(int index){
         mQuestions.remove(index);
     }
@@ -80,14 +75,59 @@ public class QuestionBank {
             Question q = mQuestions.get(k);
             q.Display();
         }
-        Log.d(TAG, mQuestions.size() + " questions here");
+        //Log.d(TAG, mQuestions.size() + " questions here");
     }
-    private void setUpQuestions(){
+
+    private void additionQuestions(){
         for(int i = 0; i<mGoTo+1; i++){
             for(int j = 0; j<mGoTo+1; j++){
                 mQuestions.add(new Question(i,j,mMathTypeForQuestions));
             }
         }
+    }
+    private void subtractionQuestions(){
+        for(int i = 0; i<mGoTo+1; i++){
+            for(int j = 0; j<mGoTo+1; j++){
+                mQuestions.add(new Question(i+j,j,mMathTypeForQuestions));
+            }
+        }
+    }
+    private void multiplicationQuestions(){
+        for(int i = 0; i<mGoTo+1; i++){
+            for(int j = 0; j<mGoTo+1; j++){
+                mQuestions.add(new Question(i,j,mMathTypeForQuestions));
+            }
+        }
+    }
+    private void divideQuestions(){
+        for(int i = 0; i<mGoTo+1; i++){
+            for(int j = 0; j<mGoTo+1; j++){
+                mQuestions.add(new Question(i*j,j,mMathTypeForQuestions));
+            }
+        }
+    }
+
+    public void setUpQuestions(int goTo, String mathType){
+        mIndex = 0;
+        mQuestions.clear();
+        mGoTo = goTo;
+        mMathTypeForQuestions = mathType;
+
+        if(mMathTypeForQuestions.equals("+")){
+            additionQuestions();
+        }
+        if(mMathTypeForQuestions.equals("-")){
+            subtractionQuestions();
+        }
+        if(mMathTypeForQuestions.equals("×")){
+            multiplicationQuestions();
+        }
+        if(mMathTypeForQuestions.equals("÷")){
+            divideQuestions();
+        }
+
+        Collections.shuffle(mQuestions);
         //printQuestions();
+        mStartTime = System.currentTimeMillis();
     }
 }
