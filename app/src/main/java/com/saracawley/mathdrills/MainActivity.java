@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mAdditionBeginner.setOnClickListener(this);
         mAdditionIntermediate.setOnClickListener(this);
+        mAdditionAdvanced.setOnClickListener(this);
         mMultiplicationAdvanced.setOnClickListener(this);
         mSubtractionBeginner.setOnClickListener(this);
         mSubtractionIntermediate.setOnClickListener(this);
@@ -186,19 +187,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             // Addition
             case R.id.addition_beginner:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(7,"+");
+                mQuestionBank.setUpQuestions(5,"+");
                 mQuestionBank.setTimeIndex(0);
                 startDrill();
                 break;
             case R.id.addition_intermediate:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(10,"+");
+                mQuestionBank.setUpQuestions(9,"+");
                 mQuestionBank.setTimeIndex(1);
                 startDrill();
                 break;
             case R.id.addition_advanced:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(15,"+");
+                mQuestionBank.setUpQuestions(12,"+");
                 mQuestionBank.setTimeIndex(2);
                 startDrill();
                 break;
@@ -206,57 +207,57 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.subtraction_beginner:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(7,"-");
+                mQuestionBank.setUpQuestions(5,"-");
                 mQuestionBank.setTimeIndex(3);
                 startDrill();
                 break;
             case R.id.subtraction_intermediate:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(10,"-");
+                mQuestionBank.setUpQuestions(9,"-");
                 mQuestionBank.setTimeIndex(4);
                 startDrill();
                 break;
             case R.id.subtraction_advanced:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(15,"-");
+                mQuestionBank.setUpQuestions(12,"-");
                 mQuestionBank.setTimeIndex(5);
                 startDrill();
                 break;
             // Multiplication
             case R.id.multiplication_beginner:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(7,"×");
+                mQuestionBank.setUpQuestions(5,"×");
                 mQuestionBank.setTimeIndex(6);
                 startDrill();
                 break;
             case R.id.multiplication_intermediate:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(10,"×");
+                mQuestionBank.setUpQuestions(9,"×");
                 mQuestionBank.setTimeIndex(7);
                 startDrill();
                 break;
             case R.id.multiplication_advanced:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(15,"×");
+                mQuestionBank.setUpQuestions(12,"×");
                 mQuestionBank.setTimeIndex(8);
                 startDrill();
                 break;
             // Division
             case R.id.division_beginner:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(7,"÷");
+                mQuestionBank.setUpQuestions(5,"÷");
                 mQuestionBank.setTimeIndex(9);
                 startDrill();
                 break;
             case R.id.division_intermediate:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(10,"÷");
+                mQuestionBank.setUpQuestions(9,"÷");
                 mQuestionBank.setTimeIndex(10);
                 startDrill();
                 break;
             case R.id.division_advanced:
                 Log.d(TAG, "start new activity");
-                mQuestionBank.setUpQuestions(15,"÷");
+                mQuestionBank.setUpQuestions(12,"÷");
                 mQuestionBank.setTimeIndex(11);
                 startDrill();
                 break;
