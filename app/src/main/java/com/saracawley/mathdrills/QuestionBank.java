@@ -1,7 +1,5 @@
 package com.saracawley.mathdrills;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,23 +16,43 @@ public class QuestionBank {
     }
 
     private List<Question> mQuestions;
-    private int mIndex;
+    private int mQuestionIndex;
     private int mGoTo;
     private String mMathTypeForQuestions;
-    private String mTotalTime;
+    private long mTotalTime;
     private long mStartTime;
     private long mEndTime;
 
+    private long[] mBestTimes = new long[12] ;
+    private int mTimeIndex = 0;
+
     private QuestionBank() {
         mQuestions = new ArrayList<Question>();
-        mIndex = 0;
+        mQuestionIndex = 0;
     }
 
-    public String getTotalTime() {
+    public int getmTimeIndex() {
+        return mTimeIndex;
+    }
+
+    public void setTimeIndex(int mTimeIndex) {
+        this.mTimeIndex = mTimeIndex;
+    }
+    public void setBestTime(int index, long time){
+        if(mBestTimes[index]> time || mBestTimes[index]== 0){
+            mBestTimes[index] = time;
+        }
+    }
+    public long getBestTime(int index){
+        return mBestTimes[index];
+    }
+
+
+    public long getTotalTime() {
         return mTotalTime;
     }
 
-    public void setTotalTime(String totalTime) {
+    public void setTotalTime(long totalTime) {
         mTotalTime = totalTime;
     }
 
@@ -55,11 +73,11 @@ public class QuestionBank {
     }
 
     public int getIndex() {
-        return mIndex;
+        return mQuestionIndex;
     }
 
     public void setIndex(int index) {
-        mIndex = index;
+        mQuestionIndex = index;
     }
 
     public Question getQuestion(int index){
@@ -108,7 +126,7 @@ public class QuestionBank {
     }
 
     public void setUpQuestions(int goTo, String mathType){
-        mIndex = 0;
+        mQuestionIndex = 0;
         mQuestions.clear();
         mGoTo = goTo;
         mMathTypeForQuestions = mathType;

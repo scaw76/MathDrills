@@ -2,6 +2,7 @@ package com.saracawley.mathdrills;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -19,7 +20,6 @@ import java.util.TimerTask;
 
 public class DrillActivity extends AppCompatActivity {
     // Tags
-    private static final String INDEX_FOR_TIME = ".com.saracawley.android.mathdrills.index_for_time";
     private static final String TAG = "DrillActivity";
 
     private int mTimeIndex;
@@ -85,8 +85,8 @@ public class DrillActivity extends AppCompatActivity {
                     mQuestionBank.setEndTime(System.currentTimeMillis());
                     long difference = mQuestionBank.getEndTime()-mQuestionBank.getStartTime();
                     long diffSeconds = difference / DateUtils.SECOND_IN_MILLIS;
-                    mQuestionBank.setTotalTime(DateUtils.formatElapsedTime(diffSeconds));
-                    mTimerView.setText(mQuestionBank.getTotalTime());
+                    mQuestionBank.setTotalTime(diffSeconds);
+                    mTimerView.setText(DateUtils.formatElapsedTime(diffSeconds));
                 }
                 }
             });
@@ -163,14 +163,13 @@ public class DrillActivity extends AppCompatActivity {
         updateView();
     }
    private void updateView(){
-       Log.d(TAG, "size in update " +mQuestionBank.getSize());
+       //Log.d(TAG, "size in update " +mQuestionBank.getSize());
        //Log.d(TAG, "index in update " +mQuestionBank.getIndex());
        if(mQuestionBank.getSize() == 0){
-
            mTestView.setVisibility(View.GONE);
            mAnswerFieldView.setEnabled(false);
            mTestOverView.setVisibility(View.VISIBLE);
-           mTotalTimeView.setText(mQuestionBank.getTotalTime());
+           mTotalTimeView.setText(DateUtils.formatElapsedTime(mQuestionBank.getTotalTime()));
 
        }else{
            Question question = mQuestionBank.getQuestion(mQuestionBank.getIndex());
@@ -206,6 +205,8 @@ public class DrillActivity extends AppCompatActivity {
             if(mQuestionBank.getSize() == 0){
                 mTestFinished = true;
                 mClockTimer.cancel();
+                mQuestionBank.setBestTime(mQuestionBank.getmTimeIndex(),mQuestionBank.getTotalTime());
+                Log.d(TAG, DateUtils.formatElapsedTime(mQuestionBank.getTotalTime()));
             }
             updateView();
             //mQuestionBank.printQuestions();
